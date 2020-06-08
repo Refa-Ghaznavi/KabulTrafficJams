@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "368693253357",
+    "firebase_url": "https://kabultrafficjams.firebaseio.com",
+    "project_id": "kabultrafficjams",
+    "storage_bucket": "kabultrafficjams.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:368693253357:android:957f875fb12f3569e1a8e4",
+        "android_client_info": {
+          "package_name": "com.example.kabultrafficjams"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "368693253357-1mtatmqp36ukbpehs031emb9fg3tm6sd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCkhSTjgS4hzMmZIy9TXbjAhgVi3J8iyzo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "368693253357-1mtatmqp36ukbpehs031emb9fg3tm6sd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
