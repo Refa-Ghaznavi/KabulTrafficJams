@@ -31,9 +31,9 @@
             android:text="@string/create_account"
             android:textAllCaps="true"
             android:textColor="@color/black"
-            android:textSize="40sp"
+            android:textSize="36sp"
             android:textStyle="bold"
-            android:transitionName="transition_title_text"/>
+            android:transitionName="transition_title_text" />
 
         <LinearLayout
             android:layout_width="match_parent"
