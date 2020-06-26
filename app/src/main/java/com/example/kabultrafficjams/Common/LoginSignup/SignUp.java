@@ -51,7 +51,18 @@ public class SignUp extends AppCompatActivity {
             return;
         }
 
+
+        String _fullName = fullName.getEditText().getText().toString();
+        String _email = email.getEditText().getText().toString();
+        String _username = username.getEditText().getText().toString();
+        String _password = password.getEditText().getText().toString();
+
         Intent intent = new Intent(getApplicationContext(), SignUp2ndClass.class);
+
+        intent.putExtra("fullName",_fullName);
+        intent.putExtra("email",_email);
+        intent.putExtra("username",_username);
+        intent.putExtra("password",_password);
 
         // add transition
 
@@ -94,7 +105,7 @@ public class SignUp extends AppCompatActivity {
             username.setError(("Field can not be empty"));
             return false;
         }
-        else if(val.length()<20){
+        else if(val.length()>20){
             username.setError(("Username is too large!"));
             return false;
         }
@@ -133,9 +144,9 @@ public class SignUp extends AppCompatActivity {
     private  boolean validatePassword(){
         String val = password.getEditText().getText().toString().trim();
         String checkPassword = "^" +
-                //"(?=.*[0-9])" +   // at least 1 digit
-                //"(?=.*[a-z])" +   // at least 1 lower case letter
-                //"(?=.*[A-Z])" +   // at least 1 upper case letter
+                "(?=.*[0-9])" +   // at least 1 digit
+                "(?=.*[a-z])" +   // at least 1 lower case letter
+                "(?=.*[A-Z])" +   // at least 1 upper case letter
                 "(?=.*[a-zA-Z])" +  // any letter;
                 "(?=.*[@#$%^&+=])" +   // at least 1 special character
                 "(?=\\S+$)" +          // no white spaces

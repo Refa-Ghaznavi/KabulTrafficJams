@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.arch.core.executor.TaskExecutor;
 
 import com.chaos.view.PinView;
+import com.example.kabultrafficjams.Databases.UserHelperClass;
 import com.example.kabultrafficjams.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -117,7 +118,8 @@ public class VerifyOTP extends AppCompatActivity {
         FirebaseDatabase rootNode = FirebaseDatabase.getInstance();
         DatabaseReference reference = rootNode.getReference("Users");
 
-        reference.setValue("First Records!");
+        UserHelperClass addNewUser = new UserHelperClass(fullName,username,email,phoneNo,password,date,gender);
+        reference.child(phoneNo).setValue(addNewUser);
     }
 
     // first check the call and then redirect user accordingly to the profile or to set new password screen
@@ -129,5 +131,5 @@ public class VerifyOTP extends AppCompatActivity {
         }
    }
 
-   // public void goToHomeFromOTP(View view){}
+   //public void goToHomeFromOTP(View view){}
 }
