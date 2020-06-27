@@ -1,14 +1,19 @@
 package com.example.kabultrafficjams.Common.LoginSignup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-
 import com.example.kabultrafficjams.R;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
@@ -42,6 +47,11 @@ public class Login extends AppCompatActivity {
 
     // login the user in app!
     public void letTheUserLoggedIn(View view) {
+
+        if (!isConnected(Login.this)) {
+            showCustomDialog();
+        }
+
         // validate username and password
         if (!validateFields()) {
             return;
@@ -50,7 +60,7 @@ public class Login extends AppCompatActivity {
         progressbar.setVisibility(View.VISIBLE);
 
 
-        // get the data
+        // get the data from field
         String _phoneNumber = phoneNumber.getEditText().getText().toString().trim();
         final String _password = password.getEditText().getText().toString().trim();
 
@@ -59,7 +69,7 @@ public class Login extends AppCompatActivity {
         }
         final String _completePhoneNumber = "+" + countryCodePicker.getFullNumber() + _phoneNumber;
 
-        //Database
+        //check weather the user exists or not in Database
         Query checkUser = FirebaseDatabase.getInstance().getReference("Users").orderByChild("phoneNo").equalTo(_completePhoneNumber);
         checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -78,7 +88,7 @@ public class Login extends AppCompatActivity {
                         String _phoneNo = dataSnapshot.child(_completePhoneNumber).child("phoneNo").getValue(String.class);
                         String _dateOfBirth = dataSnapshot.child(_completePhoneNumber).child("date").getValue(String.class);
 
-                        Toast.makeText(Login.this,_fullName+"\n"+_email+"\n"+_phoneNo+"\n"+_dateOfBirth, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Login.this, _fullName + "\n" + _email + "\n" + _phoneNo + "\n" + _dateOfBirth, Toast.LENGTH_SHORT).show();
 
                     } else {
                         progressbar.setVisibility(View.GONE);
@@ -98,6 +108,48 @@ public class Login extends AppCompatActivity {
             }
         });
 
+    }
+
+    // check internet connection
+    public static boolean isConnected(Login login) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) login.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo mobileConn = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+        NetworkInfo wifiConn = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+
+        if ((wifiConn != null && wifiConn.isConnected()) || (mobileConn != null && mobileConn.isConnected())) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private void showCustomDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(Login.this);
+        builder.setMessage("Please connect to the internet to proceed further")
+                .setCancelable(false)
+                .setPositiveButton("Wifi", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+                    }
+                })
+                .setNegativeButton("Mobile Data", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        startActivity(new Intent(Settings.ACTION_DATA_ROAMING_SETTINGS));
+                    }
+                })
+                .setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        startActivity(new Intent(getApplicationContext(), RetailerStartUpScreen.class));
+                        finish();
+                    }
+                });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     private boolean validateFields() {
