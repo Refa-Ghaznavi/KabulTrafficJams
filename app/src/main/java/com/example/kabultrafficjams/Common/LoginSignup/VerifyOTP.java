@@ -33,7 +33,7 @@ public class VerifyOTP extends AppCompatActivity {
     PinView pinFromuser;
     String codeBySystem;
 
-    String fullName,phoneNo,email,username,password,date,gender;
+    String fullName,phoneNo,email,username,password,date,gender, whatToDO;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +42,8 @@ public class VerifyOTP extends AppCompatActivity {
         // hooks
         pinFromuser = findViewById(R.id.pin_view);
 
+        // get all the data from intent from pervious activity
+
         fullName = getIntent().getStringExtra("fullName");
         email = getIntent().getStringExtra("email");
         username= getIntent().getStringExtra("username");
@@ -49,6 +51,7 @@ public class VerifyOTP extends AppCompatActivity {
         date = getIntent().getStringExtra("date");
         gender = getIntent().getStringExtra("gender");
         phoneNo = getIntent().getStringExtra("phoneNo");
+        whatToDO = getIntent().getStringExtra("whatToDO");
 
         sendVerificationCodeToUser(phoneNo);
 
@@ -100,11 +103,16 @@ public class VerifyOTP extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-
-                            storeNewUsersdata();
+                            // verification completed successfully here Either
+                            // store the data or do whatever desire
+                            if(whatToDO.equals("updateData")){
+                                updateOldUsersData();
+                            }
+                            else{
+                                storeNewUsersdata();
+                            }
 
                         } else {
-                            
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
                                 Toast.makeText(VerifyOTP.this, "Verification Not Completed! Try again.", Toast.LENGTH_SHORT).show();
                             }
@@ -113,11 +121,18 @@ public class VerifyOTP extends AppCompatActivity {
                 });
     }
 
+    private void updateOldUsersData() {
+        Intent intent = new Intent(getApplicationContext(),SetNewPassword.class);
+        intent.putExtra("phoneNo",phoneNo);
+        startActivity(intent);
+        finish();
+    }
+
     private void storeNewUsersdata() {
 
         FirebaseDatabase rootNode = FirebaseDatabase.getInstance();
         DatabaseReference reference = rootNode.getReference("Users");
-
+        // create helper class reference and store data using firebase
         UserHelperClass addNewUser = new UserHelperClass(fullName,username,email,phoneNo,password,date,gender);
         reference.child(phoneNo).setValue(addNewUser);
     }

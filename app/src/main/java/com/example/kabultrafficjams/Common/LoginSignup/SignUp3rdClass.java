@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.example.kabultrafficjams.R;
 import com.google.android.material.textfield.TextInputLayout;
 import com.hbb20.CountryCodePicker;
 
@@ -41,7 +40,7 @@ public class SignUp3rdClass extends AppCompatActivity {
         titleText = findViewById(R.id.signup_title_text);
 
         scrollView = findViewById(R.id.signup_3rd_screen_scroll_view);
-        countryCodePicker = findViewById(R.id.country_code_picker);
+        countryCodePicker = findViewById(R.id.login_country_code_picker);
         phoneNumber = findViewById(R.id.signup_phone_number);
 
     }
