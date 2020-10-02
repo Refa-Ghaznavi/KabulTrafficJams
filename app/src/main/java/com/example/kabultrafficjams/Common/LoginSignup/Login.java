@@ -161,18 +161,7 @@ public class Login extends AppCompatActivity {
 
     }
 
-   /* public static boolean isConnected(Login login) {
-        ConnectivityManager connectivityManager = (ConnectivityManager) login.getSystemService(Context.CONNECTIVITY_SERVICE);
 
-        NetworkInfo mobileConn = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-        NetworkInfo wifiConn = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-
-        if ((wifiConn != null && wifiConn.isConnected()) || (mobileConn != null && mobileConn.isConnected())) {
-            return true;
-        } else {
-            return false;
-        }
-    }*/
 
     /*
        internet

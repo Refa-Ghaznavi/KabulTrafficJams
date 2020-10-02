@@ -279,6 +279,7 @@
                         android:id="@+id/featured_recycler"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="13dp"
                         android:layout_toRightOf="@+id/feature_background"
                         android:background="@color/home_background" />
 
